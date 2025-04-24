@@ -42,14 +42,8 @@ export async function getAddressFromCoordinates(latitude, longitude) {
     }
 
     // Get the most accurate address (usually the first result)
-    const address = data.results[0].formatted_address;
-    
-    // Also extract the neighborhood if available
-    const neighborhood = data.results.find(result => 
-      result.types.includes('neighborhood')
-    )?.formatted_address || '';
+    return data.results[0].formatted_address;
 
-    return address;
   } catch (error) {
     console.error('Geocoding error:', error);
     throw new Error('Could not retrieve address');
