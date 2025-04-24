@@ -1,8 +1,7 @@
 // src/services/keywordService.js
-import axios from 'axios';
 
 export function getKeywordData(businessType, location) {
-  // Mock data for now - replace with actual API call later
+  // Mock data for now
   return {
     totalMonthlySearches: 1500,
     keywordBreakdown: [
@@ -12,5 +11,20 @@ export function getKeywordData(businessType, location) {
       { keyword: `${businessType} reviews`, volume: 200 },
       { keyword: `${businessType} hours`, volume: 150 }
     ]
+  };
+}
+
+export function getMockSearchVolume(businessType, location) {
+  return getKeywordData(businessType, location);
+}
+
+export function calculateOpportunityMetrics(searchData, competitorCount) {
+  const totalSearches = searchData.totalMonthlySearches;
+  const estimatedClickRate = Math.max(0.1, 0.3 - (competitorCount * 0.05));
+  const estimatedConversionRate = 0.1;
+
+  return {
+    estimatedMonthlyClicks: Math.round(totalSearches * estimatedClickRate),
+    potentialCustomers: Math.round(totalSearches * estimatedClickRate * estimatedConversionRate)
   };
 }
