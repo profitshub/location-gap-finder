@@ -1,5 +1,9 @@
 // src/services/googleMapsService.js
+// Add proper API key management and error handling
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+if (!API_KEY) {
+  throw new Error('Google Maps API key is missing');
+}
 
 export async function checkForExistingBusinesses(latitude, longitude, radius = 50) {
   try {
@@ -24,21 +28,30 @@ export async function checkForExistingBusinesses(latitude, longitude, radius = 5
 export async function getAddressFromCoordinates(latitude, longitude) {
   try {
     const response = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
     );
     
     if (!response.ok) {
-      throw new Error('Failed to reverse geocode');
+      throw new Error('Failed to fetch address');
     }
-    
+
     const data = await response.json();
-    if (data.results && data.results.length > 0) {
-      return data.results[0].formatted_address;
-    }
     
-    return 'Address not found';
+    if (data.status !== "OK" || !data.results || data.results.length === 0) {
+      throw new Error('No address found');
+    }
+
+    // Get the most accurate address (usually the first result)
+    const address = data.results[0].formatted_address;
+    
+    // Also extract the neighborhood if available
+    const neighborhood = data.results.find(result => 
+      result.types.includes('neighborhood')
+    )?.formatted_address || '';
+
+    return address;
   } catch (error) {
-    console.error('Error getting address:', error);
-    return 'Error retrieving address';
+    console.error('Geocoding error:', error);
+    throw new Error('Could not retrieve address');
   }
 }
