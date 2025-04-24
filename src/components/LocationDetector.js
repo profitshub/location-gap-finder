@@ -31,21 +31,20 @@ function LocationDetector({ onLocationDetected }) {
   }, [onLocationDetected]);
 
   return (
-    
+    <div className="location-detector">
       {loading ? (
-        Detecting your location...
+        <p>Detecting your location...</p>
       ) : error ? (
-        {error}
+        <p className="error">{error}</p>
       ) : (
-        
-          Location detected:
-          Latitude: {location.latitude.toFixed(6)}
-          Longitude: {location.longitude.toFixed(6)}
-        
+        <div className="location-info">
+          <p>Location detected:</p>
+          <p>Latitude: {location.latitude.toFixed(6)}</p>
+          <p>Longitude: {location.longitude.toFixed(6)}</p>
+        </div>
       )}
-    
+    </div>
   );
 }
 
 export default LocationDetector;
-```

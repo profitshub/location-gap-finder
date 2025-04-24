@@ -26,51 +26,84 @@ function BusinessForm({ location, onSubmit }) {
   };
 
   return (
-    
-      Record Business Opportunity
-      
-      
-        Business Name
-        
-      
-      
-      
-        Business Category
-        
-          Select a category
-          Restaurant
-          Retail Shop
-          Service Provider
-          Healthcare
-          Education
-          Other
-        
-      
-      
-      
-        Contact Person
-        
-      
-      
-      
-        Phone Number
-        
-      
-      
-      
-        Email
-        
-      
-      
-      
-        Notes
-        
-      
-      
-      Save Business Opportunity
-    
+    <div className="business-form">
+      <h2>Record Business Opportunity</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Business Name</label>
+          <input
+            type="text"
+            name="name"
+            value={businessData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Business Category</label>
+          <select
+            name="category"
+            value={businessData.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select a category</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Retail Shop">Retail Shop</option>
+            <option value="Service Provider">Service Provider</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Education">Education</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Contact Person</label>
+          <input
+            type="text"
+            name="contactPerson"
+            value={businessData.contactPerson}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Phone Number</label>
+          <input
+            type="tel"
+            name="phone"
+            value={businessData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={businessData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Notes</label>
+          <textarea
+            name="notes"
+            value={businessData.notes}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button type="submit">Save Business Opportunity</button>
+      </form>
+    </div>
   );
 }
 
 export default BusinessForm;
-```
