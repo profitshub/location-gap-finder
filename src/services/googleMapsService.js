@@ -28,7 +28,7 @@ export async function checkForExistingBusinesses(latitude, longitude, radius = 5
 export async function getAddressFromCoordinates(latitude, longitude) {
   try {
     const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}&result_type=street_address|premise`
     );
     
     if (!response.ok) {
@@ -36,14 +36,20 @@ export async function getAddressFromCoordinates(latitude, longitude) {
     }
 
     const data = await response.json();
+    console.log('Geocoding response:', data); // Debug info
     
     if (data.status !== "OK" || !data.results || data.results.length === 0) {
       throw new Error('No address found');
     }
 
-    // Get the most accurate address (usually the first result)
-    return data.results[0].formatted_address;
+    // Find the most precise address
+    const address = data.results.find(result => 
+      result.types.includes('street_address') || 
+      result.types.includes('premise')
+    )?.formatted_address || data.results[0].formatted_address;
 
+    console.log('Selected address:', address); // Debug info
+    return address;
   } catch (error) {
     console.error('Geocoding error:', error);
     throw new Error('Could not retrieve address');
