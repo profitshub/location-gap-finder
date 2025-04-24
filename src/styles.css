@@ -6,6 +6,14 @@
   --border-color: #e2e8f0;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --spacing-compact: 0.75rem;
+  --spacing-base: 1rem;
+  --spacing-loose: 1.5rem;
 }
 
 body {
@@ -15,24 +23,28 @@ body {
   line-height: 1.5;
   margin: 0;
   padding: 0;
+  font-size: var(--font-size-base);
 }
 
 .app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  padding: var(--spacing-compact);
+  max-width: 100%;
 }
 
 .app-header {
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--spacing-loose);
+  padding: var(--spacing-compact);
 }
 
 .app-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-compact);
+}
+
+.app-header p {
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 .app-content {
@@ -44,8 +56,7 @@ body {
 
 /* Form Styles */
 .business-form {
-  max-width: 600px;
-  margin: 0 auto;
+  padding: var(--spacing-compact);
 }
 
 .form-group {
@@ -57,17 +68,19 @@ body {
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--text-color);
+  font-size: var(--font-size-sm);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 0.75rem;
+  padding: var(--spacing-compact);
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   transition: border-color 0.2s, box-shadow 0.2s;
+  min-height: 44px; /* Minimum touch target size */
 }
 
 .form-group input:focus,
@@ -82,13 +95,13 @@ body {
 button {
   background-color: var(--primary-color);
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: var(--spacing-compact) var(--spacing-base);
   border: none;
   border-radius: 0.5rem;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
-  margin: 0.5rem;  /* Add spacing between buttons */
+  min-height: 44px;
 }
 
 /* Button Container Styles */
@@ -147,12 +160,12 @@ button.secondary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
-  margin: 2rem 0;
+  margin: var(--spacing-base) 0;
 }
 
 .metric-box {
   background: white;
-  padding: 1.5rem;
+  padding: var(--spacing-base);
   border-radius: 0.5rem;
   box-shadow: var(--shadow-sm);
   text-align: center;
@@ -160,12 +173,12 @@ button.secondary {
 
 .metric-box h3 {
   margin: 0 0 0.5rem 0;
-  font-size: 1rem;
+  font-size: var(--font-size-sm);
   color: var(--text-color);
 }
 
 .metric-value {
-  font-size: 1.5rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--primary-color);
 }
@@ -184,7 +197,7 @@ button.secondary {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: var(--spacing-base);
   background: white;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
@@ -222,5 +235,46 @@ button.secondary {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+}
+
+/* Larger screen adjustments */
+@media (min-width: 768px) {
+  :root {
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.875rem;
+    --font-size-2xl: 2.25rem;
+    --spacing-compact: 1rem;
+    --spacing-base: 1.5rem;
+    --spacing-loose: 2rem;
+  }
+
+  .app-container {
+    padding: var(--spacing-base);
+  }
+
+  .app-header {
+    margin-bottom: var(--spacing-loose);
+  }
+
+  .business-form {
+    padding: var(--spacing-base);
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) {
+  button {
+    margin: var(--spacing-compact) 0;
+  }
+  
+  .opportunity-actions {
+    gap: var(--spacing-compact);
+  }
+  
+  .form-group + .form-group {
+    margin-top: var(--spacing-base);
   }
 }
