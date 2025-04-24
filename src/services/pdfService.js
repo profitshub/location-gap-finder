@@ -1,4 +1,3 @@
-// src/services/pdfService.js
 import html2pdf from 'html2pdf.js';
 
 export function generateReport(businessInfo, searchData, opportunityData) {
